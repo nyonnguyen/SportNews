@@ -41,8 +41,8 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
-		<string>LucidaGrande</string>
-		<string>LucidaGrandeBold</string>
+		<string>LucidaGrande-Bold</string>
+		<string>LucidaGrande-Regular</string>
 	</array>
 </dict>
 </plist>

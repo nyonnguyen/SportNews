@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B0274B1D1FB21BE800345ADA /* LucidaGrande.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0274B1B1FB21BB000345ADA /* LucidaGrande.ttf */; };
-		B0274B1E1FB21BE800345ADA /* LucidaGrandeBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0274B1C1FB21BB000345ADA /* LucidaGrandeBold.ttf */; };
+		B0274B1F1FB352FE00345ADA /* LucidaGrande-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0274B1C1FB21BB000345ADA /* LucidaGrande-Bold.ttf */; };
+		B0274B201FB3532C00345ADA /* LucidaGrande-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0274B1B1FB21BB000345ADA /* LucidaGrande-Regular.ttf */; };
 		B033F4F81FA8D5620066C95D /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B033F4F71FA8D5620066C95D /* Storyboard.storyboard */; };
 		B033F4FA1FAB9AB50066C95D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B033F4F91FAB9AB50066C95D /* Assets.xcassets */; };
 		B033F4FC1FAC8C950066C95D /* MyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B033F4FB1FAC8C950066C95D /* MyCell.swift */; };
@@ -20,8 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B0274B1B1FB21BB000345ADA /* LucidaGrande.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LucidaGrande.ttf; sourceTree = "<group>"; };
-		B0274B1C1FB21BB000345ADA /* LucidaGrandeBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LucidaGrandeBold.ttf; sourceTree = "<group>"; };
+		B0274B1B1FB21BB000345ADA /* LucidaGrande-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LucidaGrande-Regular.ttf"; sourceTree = "<group>"; };
+		B0274B1C1FB21BB000345ADA /* LucidaGrande-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LucidaGrande-Bold.ttf"; sourceTree = "<group>"; };
 		B033F4F71FA8D5620066C95D /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		B033F4F91FAB9AB50066C95D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B033F4FB1FAC8C950066C95D /* MyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCell.swift; sourceTree = "<group>"; };
@@ -66,8 +66,8 @@
 		B0274B1A1FB21B9300345ADA /* LuciadGrande */ = {
 			isa = PBXGroup;
 			children = (
-				B0274B1B1FB21BB000345ADA /* LucidaGrande.ttf */,
-				B0274B1C1FB21BB000345ADA /* LucidaGrandeBold.ttf */,
+				B0274B1B1FB21BB000345ADA /* LucidaGrande-Regular.ttf */,
+				B0274B1C1FB21BB000345ADA /* LucidaGrande-Bold.ttf */,
 			);
 			path = LuciadGrande;
 			sourceTree = "<group>";
@@ -169,8 +169,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0274B1D1FB21BE800345ADA /* LucidaGrande.ttf in Resources */,
-				B0274B1E1FB21BE800345ADA /* LucidaGrandeBold.ttf in Resources */,
+				B0274B201FB3532C00345ADA /* LucidaGrande-Regular.ttf in Resources */,
+				B0274B1F1FB352FE00345ADA /* LucidaGrande-Bold.ttf in Resources */,
 				B04A65DE1FA19E0800C6CEF7 /* LaunchScreen.storyboard in Resources */,
 				B033F4FA1FAB9AB50066C95D /* Assets.xcassets in Resources */,
 				B033F4F81FA8D5620066C95D /* Storyboard.storyboard in Resources */,

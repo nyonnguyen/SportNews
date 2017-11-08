@@ -9,8 +9,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="LucidaGrande.ttf">
-            <string>LucidaGrande</string>
+        <array key="LucidaGrande-Bold.ttf">
+            <string>LucidaGrande-Bold</string>
         </array>
     </customFonts>
     <scenes>
@@ -18,7 +18,7 @@
         <scene sceneID="sbX-wf-VpF">
             <objects>
                 <viewController id="XTX-N8-Kqp" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="C5e-3y-Pgh">
+                    <view key="view" userInteractionEnabled="NO" contentMode="scaleToFill" id="C5e-3y-Pgh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -30,10 +30,18 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fog-fp-rqG">
                                 <rect key="frame" x="166" y="452" width="88" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="LucidaGrande" family="Lucida Grande" pointSize="31"/>
+                                <fontDescription key="fontDescription" name="LucidaGrande-Bold" family="Lucida Grande" pointSize="31"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RNd-5T-0hX">
+                                <rect key="frame" x="162" y="558" width="76" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="Button" backgroundImage="stadium">
+                                    <color key="titleColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                </state>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="awS-of-B3c"/>
                     </view>
@@ -43,4 +51,7 @@
             <point key="canvasLocation" x="304.80000000000001" y="-215.44227886056973"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="stadium" width="22" height="22"/>
+    </resources>
 </document>
