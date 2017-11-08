@@ -22,7 +22,7 @@ UICollectionViewDelegateFlowLayout {
     
     var pageIndex: Int = 0
     var previousIndex: Int = 0
-    let cellSize = CGSize(width: 250, height: 200)
+    let cellSize = CGSize(width: 300, height: 250)
     let spaceBetweenCells = CGFloat(20)
     var pageSize: CGFloat {
         return CGFloat(spaceBetweenCells + cellSize.width)
@@ -69,25 +69,18 @@ UICollectionViewDelegateFlowLayout {
         return view
     }()
     
-    let logoBoundView: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFit
-        view.image = UIImage(named: "padRing")
+    let logoBoundView: GradientView = {
+        let view = GradientView()
+        view.startColor = UIColor.blue
+        view.endColor = UIColor.red
+        view.opacityValue = 1
         view.translatesAutoresizingMaskIntoConstraints = false
-        let layer = CAGradientLayer()
-        layer.colors = [UIColor.blue.cgColor, UIColor.red.cgColor]
-        view.layer.insertSublayer(layer, at: 0)
+        //view.backgroundColor = UIColor.gray
+        let mask = UIImageView(image: UIImage(named: "padRing"))
+        mask.contentMode = .scaleAspectFit
+        view.mask = mask
         return view
     }()
-    
-//    let logoBoundView: GradientView = {
-//        let view = GradientView()
-//        view.startColor = UIColor.blue
-//        view.endColor = UIColor.red
-//        view.opacityValue = 1
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
     
     let cupLogoView: UIImageView = {
         let view = UIImageView()
@@ -98,22 +91,39 @@ UICollectionViewDelegateFlowLayout {
         return view
     }()
     
-    let rankText: UILabel = {
+    let rankTextNum: UILabel = {
         let text = UILabel()
         text.textColor = UIColor(white: 1, alpha: 0.9)
-        text.font = UIFont.boldSystemFont(ofSize: 48)
+        text.font = UIFont.boldSystemFont(ofSize: 42)
+//        text.font = UIFont(name: "LucidaGrande", size: 42)
         text.text = "0"
         text.numberOfLines = 1
         text.baselineAdjustment = .alignBaselines
         text.textAlignment = .center
         text.translatesAutoresizingMaskIntoConstraints = false
-        //text.backgroundColor = UIColor.red
         return text
+    }()
+    
+    let rankPlaceText: UILabel = {
+        let text = UILabel()
+        text.text = "Current place"
+        text.font = UIFont.systemFont(ofSize: 12)
+        text.textColor = UIColor(white: 1, alpha: 0.9)
+        text.baselineAdjustment = .alignBaselines
+        text.textAlignment = .center
+        text.translatesAutoresizingMaskIntoConstraints = false
+        return text
+    }()
+    
+    let rankTextBox: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        //view.backgroundColor = UIColor.gray
+        return view
     }()
     
     let rankLogoContainer: UIView = {
         let view = UIView()
-        //view.backgroundColor = UIColor.gray
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -129,35 +139,6 @@ UICollectionViewDelegateFlowLayout {
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
-    
-    func createARGBBitmapContextFromImage(inImage: CGImage) -> CGContext? {
-        
-        let width = inImage.width
-        let height = inImage.height
-        
-        let bitmapBytesPerRow = width * 4
-        let bitmapByteCount = bitmapBytesPerRow * height
-        
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        // if colorSpace == nil {
-        // return nil
-        // }
-        
-        let bitmapData = malloc(bitmapByteCount)
-        if bitmapData == nil {
-            return nil
-        }
-        
-        let context = CGContext (data: bitmapData,
-                                 width: width,
-                                 height: height,
-                                 bitsPerComponent: 8, // bits per component
-            bytesPerRow: bitmapBytesPerRow,
-            space: colorSpace,
-            bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue)
-        
-        return context
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -178,7 +159,9 @@ UICollectionViewDelegateFlowLayout {
     
     func setupViews() {
         
-        rankLogoContainer.addSubview(rankText)
+        rankTextBox.addSubview(rankTextNum)
+        rankTextBox.addSubview(rankPlaceText)
+        rankLogoContainer.addSubview(rankTextBox)
         rankLogoContainer.addSubview(logoBoundView)
         rankLogoContainer.addSubview(logoView)
         rankLogoContainer.addSubview(cupLogoView)
@@ -189,44 +172,50 @@ UICollectionViewDelegateFlowLayout {
         self.view.addSubview(rankLogoContainer)
         self.view.addSubview(collectionView)
         
-        
         bgImage.frame = view.frame
         bgView.frame = view.frame
 
         
         let clubNameHeight: CGFloat = 50
         let cvHeight = view.frame.height * 0.42
-        
+        let logoBoundWidth: CGFloat = 150
         let blockWidth: CGFloat = 80
         let containerWidth: CGFloat = blockWidth + (blockWidth*0.4)
-        let cvTop = view.frame.height * 0.44 - clubNameHeight - blockWidth
-        let innerSpace: CGFloat = 0
-        let outerSpace = (view.frame.width - blockWidth*3 - innerSpace)/2
-        
+        let bottomBar: CGFloat = 40
+        let cvTop = view.frame.height*0.12
+        let innerContainerSpace: CGFloat = 0
+        let outerContainerSpace = (view.frame.width - logoBoundWidth - blockWidth*2)/4
         
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": rankLogoContainer]))
         
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": collectionView]))
         
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-top-[v2(cWidth)]-10-[v1(nameHeight)]-10-[v0(height)]", options: NSLayoutFormatOptions(), metrics: ["height": cvHeight, "top": cvTop, "nameHeight": clubNameHeight, "cWidth": containerWidth], views: ["v0": collectionView, "v1": clubName, "v2": rankLogoContainer]))
+        // bottom bar is not added yet
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-top-[v2(cWidth)][v1(nameHeight)]-40-[v0(height)]", options: NSLayoutFormatOptions(), metrics: ["height": cvHeight, "top": cvTop, "nameHeight": clubNameHeight, "cWidth": containerWidth], views: ["v0": collectionView, "v1": clubName, "v2": rankLogoContainer]))
         
         
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": clubName]))
         
-//        self.rankLogoContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: ["oSpace": outerSpace, "iSpace": innerSpace, "bw": blockWidth], views: ["v0": logoBoundView]))
-//        self.rankLogoContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: ["oSpace": outerSpace, "iSpace": innerSpace, "bw": blockWidth], views: ["v0": logoBoundView]))
-        
         logoView.centerXAnchor.constraint(equalTo: self.rankLogoContainer.centerXAnchor).isActive = true
         logoBoundView.centerXAnchor.constraint(equalTo: self.logoView.centerXAnchor).isActive = true
         
-        self.rankLogoContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v2(bw)]-iSpace-[v0(bw)][v3]-iSpace-[v1(bw)]|", options: NSLayoutFormatOptions(), metrics: ["oSpace": outerSpace, "iSpace": innerSpace, "bw": blockWidth], views: ["v0": logoView, "v1": cupLogoView, "v2": rankText, "v3": logoBoundView]))
-
+        self.rankLogoContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[v2(bw)]-oSpace-[v3(lbw)]-oSpace-[v1(bw)]", options: NSLayoutFormatOptions(), metrics: ["oSpace": outerContainerSpace, "iSpace": innerContainerSpace, "bw": blockWidth, "lbw": logoBoundWidth], views: ["v0": logoView, "v1": cupLogoView, "v2": rankTextBox, "v3": logoBoundView]))
+        
+        
         self.rankLogoContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": logoBoundView]))
+        
+        self.rankLogoContainer.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": rankTextBox]))
+        
+        let rankSpace = 80 - 42 - 12
+        
+        self.rankTextBox.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-space-[v0][v1(14)]-space-|", options: NSLayoutFormatOptions(), metrics: ["space": rankSpace], views: ["v0": rankTextNum, "v1": rankPlaceText]))
+        
+        self.rankTextBox.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": rankTextNum]))
+        self.rankTextBox.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": rankPlaceText]))
         
         logoView.centerYAnchor.constraint(equalTo: self.rankLogoContainer.centerYAnchor).isActive = true
         logoBoundView.centerYAnchor.constraint(equalTo: self.rankLogoContainer.centerYAnchor).isActive = true
         cupLogoView.centerYAnchor.constraint(equalTo: self.rankLogoContainer.centerYAnchor).isActive = true
-        rankText.centerYAnchor.constraint(equalTo: self.rankLogoContainer.centerYAnchor).isActive = true
         
         loadDataToView()
     }
@@ -244,7 +233,10 @@ UICollectionViewDelegateFlowLayout {
         
         self.logoView.image = UIImage(named: self.items[self.pageIndex].club.logo)
         
-        self.rankText.text = String(self.items[self.pageIndex].rank)
+        self.rankTextNum.text = String(self.items[self.pageIndex].rank)
+        
+        self.logoBoundView.startColor = self.items[self.pageIndex].club.colors[0]
+        self.logoBoundView.endColor = self.items[self.pageIndex].club.colors[1]
     }
     
     func updateViewWhenChange() {
@@ -312,9 +304,6 @@ UICollectionViewDelegateFlowLayout {
         return UIEdgeInsetsMake(0, (self.view.frame.width/2) - (self.cellSize.width/2), 0, (self.view.frame.width/2) - (self.cellSize.width/2))
     }
 }
-
-
-
 
 
 
