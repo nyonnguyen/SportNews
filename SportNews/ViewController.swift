@@ -22,7 +22,7 @@ UICollectionViewDelegateFlowLayout {
     
     var pageIndex: Int = 0
     var previousIndex: Int = 0
-    let cellSize = CGSize(width: 300, height: 250)
+    var cellSize = CGSize(width: 300, height: 250)
     let spaceBetweenCells = CGFloat(20)
     var pageSize: CGFloat {
         return CGFloat(spaceBetweenCells + cellSize.width)
@@ -200,14 +200,8 @@ UICollectionViewDelegateFlowLayout {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for family: String in UIFont.familyNames
-        {
-            print("\(family)")
-            for names: String in UIFont.fontNames(forFamilyName: family)
-            {
-                print("== \(names)")
-            }
-        }
+        let ratioSize = cellSize.width/375
+        cellSize = CGSize(width: cellSize.width*ratioSize, height: cellSize.height*ratioSize)
         
         // sort player by rank
         sortItemRank()
@@ -282,7 +276,7 @@ UICollectionViewDelegateFlowLayout {
         self.webIcon.centerYAnchor.constraint(equalTo: self.moreInfoBox.centerYAnchor).isActive = true
         self.webBtn.centerYAnchor.constraint(equalTo: self.moreInfoBox.centerYAnchor).isActive = true
         
-        self.moreInfoBox.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[v0(12)]-5-[v1]-30-[v2(2)]-30-[v3(12)]-5-[v4]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": stadiumIcon, "v1": stadiumBtn, "v2": barView, "v3": webIcon, "v4": webBtn]))
+        self.moreInfoBox.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[v0(12)]-10-[v1]-30-[v2(2)]-30-[v3(12)]-5-[v4]", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": stadiumIcon, "v1": stadiumBtn, "v2": barView, "v3": webIcon, "v4": webBtn]))
         self.moreInfoBox.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v2]|", options: NSLayoutFormatOptions(), metrics: nil, views: ["v0": stadiumIcon, "v1": stadiumBtn, "v2": barView, "v3": webIcon, "v4": webBtn]))
         
         // Rank box
@@ -323,8 +317,10 @@ UICollectionViewDelegateFlowLayout {
         self.clubName.layer.opacity = 1
         
         self.logoView.image = UIImage(named: self.items[self.pageIndex].club.logo)
+        self.logoView.layer.opacity = 1
         
         self.rankNum.text = String(self.items[self.pageIndex].rank)
+        self.rankNum.layer.opacity = 1
         
         self.logoBoundView.startColor = self.items[self.pageIndex].club.colors[0]
         self.logoBoundView.endColor = self.items[self.pageIndex].club.colors[1]
@@ -347,6 +343,8 @@ UICollectionViewDelegateFlowLayout {
                 self.bgImage.layer.opacity = 0.3
                 self.bgView.layer.opacity = 0.3
                 self.clubName.layer.opacity = 0.3
+                self.logoView.layer.opacity = 0.3
+                self.rankNum.layer.opacity = 0.3
             }) { (done) in
                 UIView.animate(withDuration: 0.3, animations: {
                     self.loadDataToView()
